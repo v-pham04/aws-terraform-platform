@@ -8,9 +8,9 @@ To ensure continuous code quality, a **CI/CD pipeline via GitHub Actions** is in
 ## 🏗️ Architecture Design
 The infrastructure leverages modular blueprints to achieve scalability and maintainability:
 
-* **Networking (VPC Module):** Sets up custom Virtual Private Clouds (VPCs) with independent CIDR blocks for each environment, isolating public and private subnets, internet gateways, and custom routing tables.
-* **Security (Firewall Module):** Enforces least-privilege access controls by building restrictive Security Groups that limit inbound access to critical service ports (SSH/HTTP).
-* **Compute (EC2 Module):** Provisions scalable, free-tier eligible Amazon Linux compute instances bootstrapped with automated shell scripts (`user_data`) to launch an active web server immediately upon initialization.
+- **Networking (VPC Module):** Sets up custom Virtual Private Clouds (VPCs) with independent CIDR blocks for each environment, isolating public and private subnets, internet gateways, and custom routing tables.
+- **Security (Firewall Module):** Enforces least-privilege access controls by building restrictive Security Groups that limit inbound access to critical service ports (SSH/HTTP).
+- **Compute (EC2 Module):** Provisions scalable, free-tier eligible Amazon Linux compute instances bootstrapped with automated shell scripts (`user_data`) to launch an active web server immediately upon initialization.
 
 ## 📁 Repository Structure
 ```text
@@ -22,9 +22,10 @@ aws-terraform-platform/
 │   ├── security-group/       # Custom firewall rules
 │   └── ec2/                  # Bootstrapped compute instance definitions
 └── environments/             # Live environment deployments
-    ├── dev/                  # Development sandbox
-    ├── test/                 # Testing/Staging configuration
-    └── prod/                 # Production environment
+	 ├── dev/                  # Development sandbox
+	 ├── test/                 # Testing/Staging configuration
+	 └── prod/                 # Production environment
+```
 
 ## 🚀 Key Technical Features
 
@@ -46,24 +47,24 @@ To initialize and deploy any chosen environment, such as Development:
 
 1. Navigate to the targeted deployment environment directory:
 
-    ```bash
-    cd environments/dev
-    ```
+	```bash
+	cd environments/dev
+	```
 
 2. Initialize the backend workspace and download the provider plugins:
 
-    ```bash
-    terraform init
-    ```
+	```bash
+	terraform init
+	```
 
 3. Generate and inspect an infrastructure execution preview plan:
 
-    ```bash
-    terraform plan
-    ```
+	```bash
+	terraform plan
+	```
 
 4. Apply the structural blueprint to build live AWS resources:
 
-    ```bash
-    terraform apply --auto-approve
-    ```
+	```bash
+	terraform apply --auto-approve
+	```
