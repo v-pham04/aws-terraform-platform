@@ -1,0 +1,43 @@
+name: "Terraform Code Quality Check"
+
+on: 
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  terraform_validation:
+    name: "Lint and Validate Terraform Code"
+    runs-on: ubuntu-latest
+
+    steps:
+      # Download the repository code onto the Linux container
+      - name: Check Source Code 
+        uses: actions/checkout@v4
+      # Install Terraform onto the Linux container
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.5.0
+      # Check formatting of Terraform code
+      - name: Check Terraform Format
+        run: terraform fmt -check -recursive
+      # Check syntax in the Dev environment
+      - name: Initialize and Validate Dev
+        run: |
+          cd environments/dev
+          terraform init -backend=false 
+          terraform validate
+      # Check syntax in the Test environment
+      - name: Initialize and Validate Test
+        run: |
+          cd environments/test
+          terraform init -backend=false
+          terraform validate
+      # Check syntax in the Prod environment
+      - name: Initialize and Validate Prod
+        run: |
+          cd environments/prod
+          terraform init -backend=false
+          terraform validate
