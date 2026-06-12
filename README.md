@@ -5,14 +5,14 @@ An enterprise-grade, production-ready Infrastructure as Code (IaC) repository th
 
 To ensure continuous code quality, a **CI/CD pipeline via GitHub Actions** is integrated to automatically lint, format, and validate all infrastructure configurations upon every codebase modification.
 
-## 🏗️ Architecture Design
+## Architecture Design
 The infrastructure leverages modular blueprints to achieve scalability and maintainability:
 
 * **Networking (VPC Module):** Sets up custom Virtual Private Clouds (VPCs) with independent CIDR blocks for each environment, isolating public and private subnets, internet gateways, and custom routing tables.
 * **Security (Firewall Module):** Enforces least-privilege access controls by building restrictive Security Groups that limit inbound access to critical service ports (SSH/HTTP).
 * **Compute (EC2 Module):** Provisions scalable, free-tier eligible Amazon Linux compute instances bootstrapped with automated shell scripts (`user_data`) to launch an active web server immediately upon initialization.
 
-## 📁 Repository Structure
+## Repository Structure
 ```text
 aws-terraform-platform/
 ├── .github/workflows/
@@ -25,3 +25,20 @@ aws-terraform-platform/
     ├── dev/                  # Development sandbox
     ├── test/                 # Testing/Staging configuration
     └── prod/                 # Production environment
+## **Key Technical Features**
+True Code Reusability: Zero hardcoded values within core modules. Environments are spun up dynamically by feeding environmental variables into the foundational factory blueprints.
+Predictable Network Isolation: Strict CIDR segmentation across environments (10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16) prevents overlapping IP spaces.
+Automated GitOps Guardrails: Integrated GitHub Actions pipeline enforces syntax consistency via terraform fmt and code structural validity via terraform validate on every Pull Request.
+Cost Management Conscious: Configured entirely out-of-the-box to run within the AWS Free Tier, explicitly prioritizing cost-effective architecture structures.
+
+## **Deployment & Local Verification**
+**Prerequisites**
+Terraform CLI installed locally
+AWS CLI configured with appropriate IAM user credentials
+
+**Execution Steps**
+To initialize and deploy any chosen environment (e.g., Development):
+Navigate to the targeted deployment environment directory: cd environments/dev
+Initialize the backend workspace and download the provider plugins: terraform init
+Generate and inspect an infrastructure execution preview plan: terraform plan
+Apply the structural blueprint to build live AWS resources: terraform apply --auto-approve
