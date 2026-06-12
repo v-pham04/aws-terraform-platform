@@ -11,9 +11,9 @@ module "vpc" {
 
 # Deploy the security group 
 module "security_group" { # This name does not have to match with the acutal module 
-  source  = "../../modules/security_group"
-  env     = var.env
-  vpic_id = module.vpc.vpc_id
+  source = "../../modules/security-group"
+  env    = var.env
+  vpc_id = module.vpc.vpc_id
 }
 
 # Deploy the EC2 Instance Module
