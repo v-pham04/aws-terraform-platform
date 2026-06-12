@@ -1,4 +1,4 @@
-name: "Terraform Code Quality Check"
+name: "Terraform Code Quality Check and Security Scan"
 
 on: 
   push:
@@ -23,6 +23,11 @@ jobs:
       # Check formatting of Terraform code
       - name: Check Terraform Format
         run: terraform fmt -check -recursive
+      # Run DevSecOps Security Scan
+      - name: Run tfsec Security Scan
+        uses: aquasecurity/tfsec-action@v0.2.5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       # Check syntax in the Dev environment
       - name: Initialize and Validate Dev
         run: |
