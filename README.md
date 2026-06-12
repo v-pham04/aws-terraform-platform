@@ -1,44 +1,57 @@
-# AWS Multi-Environment Infrastructure Platform via Terraform
+AWS Multi-Environment Infrastructure Platform (Terraform)
+📌 Project Overview
+This project is an enterprise-grade Infrastructure as Code (IaC) platform designed to automate the deployment of a secure, scalable, and isolated multi-environment AWS architecture using Terraform.
+It provisions separate Development, Testing, and Production environments using reusable Terraform modules, following cloud engineering best practices such as environment isolation, least-privilege security, and cost optimization.
+A fully automated CI/CD pipeline via GitHub Actions ensures continuous code quality by running formatting, linting, and validation checks on every change.
 
-## 📌 Project Overview
-An enterprise-grade, production-ready Infrastructure as Code (IaC) repository that automates the deployment of an isolated, multi-environment AWS cloud architecture. Utilizing **Terraform Modules**, this platform provisions separate **Development, Testing, and Production** environments following cloud engineering best practices, strict network isolation, and cost-optimization principles.
+🏗️ Architecture Overview
+This infrastructure is built using modular Terraform components to ensure scalability, reusability, and maintainability:
+🌐 Networking (VPC Module)
+Creates isolated Virtual Private Clouds (VPCs) per environment
+Defines separate CIDR blocks for Dev, Test, and Prod
+Configures public/private subnets, internet gateways, and routing tables
+🔐 Security (Security Group Module)
+Implements least-privilege security principles
+Restricts inbound traffic to required ports (e.g., SSH, HTTP)
+Provides environment-specific firewall configurations
+💻 Compute (EC2 Module)
+Provisions Amazon Linux EC2 instances (Free Tier eligible)
+Uses user_data scripts for automated bootstrapping
+Launches a ready-to-use web server on deployment
 
-To ensure continuous code quality, a **CI/CD pipeline via GitHub Actions** is integrated to automatically lint, format, and validate all infrastructure configurations upon every codebase modification.
-
-## Architecture Design
-The infrastructure leverages modular blueprints to achieve scalability and maintainability:
-
-* **Networking (VPC Module):** Sets up custom Virtual Private Clouds (VPCs) with independent CIDR blocks for each environment, isolating public and private subnets, internet gateways, and custom routing tables.
-* **Security (Firewall Module):** Enforces least-privilege access controls by building restrictive Security Groups that limit inbound access to critical service ports (SSH/HTTP).
-* **Compute (EC2 Module):** Provisions scalable, free-tier eligible Amazon Linux compute instances bootstrapped with automated shell scripts (`user_data`) to launch an active web server immediately upon initialization.
-
-## Repository Structure
-```text
+📁 Repository Structure
 aws-terraform-platform/
 ├── .github/workflows/
-│   └── terraform-check.yml   # Automated CI/CD syntax and linting pipeline
-├── modules/                  # Reusable infrastructure factory blueprints
-│   ├── vpc/                  # Network configuration files
-│   ├── security-group/       # Custom firewall rules
-│   └── ec2/                  # Bootstrapped compute instance definitions
-└── environments/             # Live environment deployments
-    ├── dev/                  # Development sandbox
-    ├── test/                 # Testing/Staging configuration
-    └── prod/                 # Production environment
-## **Key Technical Features**
-True Code Reusability: Zero hardcoded values within core modules. Environments are spun up dynamically by feeding environmental variables into the foundational factory blueprints.
-Predictable Network Isolation: Strict CIDR segmentation across environments (10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16) prevents overlapping IP spaces.
-Automated GitOps Guardrails: Integrated GitHub Actions pipeline enforces syntax consistency via terraform fmt and code structural validity via terraform validate on every Pull Request.
-Cost Management Conscious: Configured entirely out-of-the-box to run within the AWS Free Tier, explicitly prioritizing cost-effective architecture structures.
+│   └── terraform-check.yml      # CI/CD pipeline (fmt, lint, validate)
+├── modules/                     # Reusable Terraform modules
+│   ├── vpc/                     # VPC networking module
+│   ├── security-group/         # Firewall/security rules module
+│   └── ec2/                    # Compute instance module
+└── environments/               # Environment-specific deployments
+    ├── dev/                    # Development environment
+    ├── test/                   # Testing/Staging environment
+    └── prod/                   # Production environment
 
-## **Deployment & Local Verification**
-**Prerequisites**
-Terraform CLI installed locally
-AWS CLI configured with appropriate IAM user credentials
+⚙️ Key Features
+Modular Design: Fully reusable Terraform modules with no hardcoded environment values
+Environment Isolation: Strict CIDR segmentation (e.g., 10.0.0.0/16, 10.1.0.0/16, 10.2.0.0/16)
+CI/CD Automation: GitHub Actions pipeline enforces:
+terraform fmt
+terraform validate
+Cost-Efficient: Designed to operate within AWS Free Tier limits
+Scalable Architecture: Easily extendable to additional environments or services
 
-**Execution Steps**
-To initialize and deploy any chosen environment (e.g., Development):
-Navigate to the targeted deployment environment directory: cd environments/dev
-Initialize the backend workspace and download the provider plugins: terraform init
-Generate and inspect an infrastructure execution preview plan: terraform plan
-Apply the structural blueprint to build live AWS resources: terraform apply --auto-approve
+🚀 Deployment & Local Setup
+📦 Prerequisites
+Terraform CLI installed
+AWS CLI configured with valid IAM credentials
+🛠️ Deployment Steps
+To deploy an environment (e.g., Development):
+# Navigate to environment
+cd environments/dev
+# Initialize Terraform
+terraform init
+# Preview changes
+terraform plan
+# Apply infrastructure
+terraform apply --auto-approve
